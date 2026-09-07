@@ -9,9 +9,10 @@
   --color-fg: #f4f3ef;
   --color-fg-muted: #9a9c9f;
   --color-fg-faint: #63666b;
-  --color-accent: #35e0ac;
-  --color-accent-dim: #1c8f6e;
-  --color-accent-fg: #04120d;
+  --color-accent: #2563eb;
+  --color-accent-text: #60a5fa;
+  --color-accent-dim: #1d4ed8;
+  --color-accent-fg: #f8fafc;
 }
 
 @theme inline {
@@ -24,6 +25,7 @@
   --color-fg-muted: var(--color-fg-muted);
   --color-fg-faint: var(--color-fg-faint);
   --color-accent: var(--color-accent);
+  --color-accent-text: var(--color-accent-text);
   --color-accent-dim: var(--color-accent-dim);
   --color-accent-fg: var(--color-accent-fg);
   --font-sans: var(--font-geist-sans);
@@ -72,7 +74,7 @@ body {
 }
 
 .glow-orb {
-  background: radial-gradient(circle at 50% 40%, rgba(53, 224, 172, 0.55), rgba(53, 224, 172, 0.12) 35%, transparent 70%);
+  background: radial-gradient(circle at 50% 40%, rgba(96, 165, 250, 0.55), rgba(96, 165, 250, 0.12) 35%, transparent 70%);
   filter: blur(40px);
 }
 

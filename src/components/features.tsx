@@ -36,7 +36,7 @@ export function Features() {
           {features.map((feature, i) => (
             <Reveal key={feature.title} delay={i * 100}>
               <div className="h-full rounded-2xl border border-border-soft bg-bg-panel/60 p-6 transition-colors hover:border-border">
-                <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent-text">
                   <feature.icon />
                 </div>
                 <h3 className="text-lg font-medium text-fg">{feature.title}</h3>

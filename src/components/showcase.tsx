@@ -37,7 +37,7 @@ export function Showcase() {
                   </span>
                   <span
                     className={`text-xs font-medium ${
-                      row.status === "Resolved" ? "text-accent" : "text-fg-faint"
+                      row.status === "Resolved" ? "text-accent-text" : "text-fg-faint"
                     }`}
                   >
                     {row.status}

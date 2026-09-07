@@ -22,9 +22,9 @@ export function Footer() {
       <Container className="flex flex-col gap-12">
         <div className="flex flex-col justify-between gap-10 sm:flex-row">
           <div className="flex max-w-xs flex-col gap-3">
-            <Link href="/" className="flex items-center gap-1.5 text-lg font-semibold tracking-tight text-fg">
-              Telkie
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+            <Link href="/" className="flex items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/logo/telkie-logo-white.svg" alt="Telkie" className="h-8 w-auto" />
             </Link>
             <p className="text-sm text-fg-muted">WeChat, done the hotel way.</p>
           </div>

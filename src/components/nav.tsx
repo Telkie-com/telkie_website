@@ -11,10 +11,10 @@ const links = [
 export function Nav() {
   return (
     <header className="sticky top-0 z-50 border-b border-border-soft bg-bg/80 backdrop-blur-md">
-      <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-1.5 text-lg font-semibold tracking-tight text-fg">
-          Telkie
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+      <Container className="flex items-center justify-between py-3">
+        <Link href="/" className="flex items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/logo/telkie-logo-white.svg" alt="Telkie" className="h-[60px] w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-8 text-sm text-fg-muted md:flex">

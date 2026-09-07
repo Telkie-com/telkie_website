@@ -29,7 +29,7 @@ export function Pricing() {
             <ul className="flex flex-col gap-3.5">
               {included.map((item) => (
                 <li key={item} className="flex items-center gap-3 text-sm text-fg">
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent-text">
                     <IconCheck className="h-3 w-3" />
                   </span>
                   {item}

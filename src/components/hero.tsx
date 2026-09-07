@@ -29,7 +29,7 @@ export function Hero() {
         <Reveal delay={80}>
           <h1 className="mt-6 max-w-3xl text-4xl font-medium tracking-tight text-balance sm:text-6xl">
             Turn WeChat into your{" "}
-            <span className="bg-gradient-to-r from-accent to-emerald-200 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-accent-text to-blue-100 bg-clip-text text-transparent">
               five-star advantage
             </span>
             .
@@ -53,44 +53,15 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={320} className="w-full">
-          <div className="relative mt-20 w-full max-w-3xl">
-            <div className="rounded-2xl border border-border bg-bg-panel/80 p-2 shadow-[0_40px_120px_-40px_rgba(53,224,172,0.35)] backdrop-blur">
-              <div className="flex items-center gap-1.5 border-b border-border-soft px-3 py-2.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
-                <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
-                <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
-                <span className="ml-3 text-xs text-fg-faint">Telkie — Front Desk Inbox</span>
-              </div>
-              <div className="grid grid-cols-1 gap-0 text-left sm:grid-cols-[160px_1fr]">
-                <div className="hidden flex-col gap-1 border-r border-border-soft p-3 sm:flex">
-                  {["Front Desk", "Concierge", "Housekeeping", "Guest Relations"].map((team, i) => (
-                    <div
-                      key={team}
-                      className={`rounded-lg px-2.5 py-2 text-xs ${
-                        i === 0 ? "bg-accent/10 text-accent" : "text-fg-faint"
-                      }`}
-                    >
-                      {team}
-                    </div>
-                  ))}
-                </div>
-                <div className="flex flex-col gap-3 p-4 sm:p-5">
-                  <div className="flex justify-start">
-                    <div className="max-w-[75%] rounded-2xl rounded-bl-sm bg-bg-raised px-3.5 py-2.5 text-sm text-fg-muted">
-                      我们的房间可以提前入住吗？
-                    </div>
-                  </div>
-                  <div className="flex justify-end">
-                    <div className="max-w-[75%] rounded-2xl rounded-br-sm bg-accent/15 px-3.5 py-2.5 text-sm text-fg">
-                      Early check-in is confirmed for 12:00 PM — see you soon!
-                    </div>
-                  </div>
-                  <div className="flex justify-start">
-                    <div className="max-w-[60%] rounded-2xl rounded-bl-sm bg-bg-raised px-3.5 py-2.5 text-sm text-fg-muted">
-                      太好了，谢谢！
-                    </div>
-                  </div>
-                </div>
+          <div className="relative mt-20 w-full max-w-4xl">
+            <div className="overflow-hidden rounded-2xl border border-border bg-bg-panel/80 p-2 shadow-[0_40px_120px_-40px_rgba(96,165,250,0.35)] backdrop-blur">
+              <div className="overflow-hidden rounded-xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/feature-ui/messenger-dashboard.png"
+                  alt="Telkie front desk inbox showing a guest conversation in Chinese with an English translation"
+                  className="w-full h-auto"
+                />
               </div>
             </div>
           </div>
