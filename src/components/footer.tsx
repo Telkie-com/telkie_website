@@ -48,7 +48,7 @@ export function Footer() {
         <div className="flex flex-col-reverse items-center justify-between gap-4 border-t border-border-soft pt-8 sm:flex-row">
           <p className="text-xs text-fg-faint">© 2026 Telkie Limited. All rights reserved.</p>
           <a
-            href="https://www.linkedin.com/company/telkie"
+            href="https://hk.linkedin.com/company/telkie"
             target="_blank"
             rel="noreferrer"
             className="text-xs text-fg-muted transition-colors hover:text-fg"
