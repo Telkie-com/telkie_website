@@ -10,7 +10,7 @@ const links = [
 
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border-soft bg-bg/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md">
       <Container className="flex items-center justify-between py-3">
         <Link href="/" className="flex items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}

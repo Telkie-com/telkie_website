@@ -18,7 +18,7 @@ export function SplitSection({
   padding?: string;
   className?: string;
 }) {
-  const border = bordered ? "border-t border-border-soft" : "";
+  const border = bordered ? "border-t border-border" : "";
 
   return (
     <section id={id} className={`${border} ${padding} ${className}`}>

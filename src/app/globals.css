@@ -5,7 +5,7 @@
   --color-bg-raised: #ffffff;
   --color-bg-panel: #f1eee6;
   --color-border: #8f8b82;
-  --color-border-soft: #c4beb0;
+  --color-border-strong: #6b6862;
   --color-fg: #3a3a3d;
   --color-fg-muted: #6b6b6e;
   --color-fg-faint: #706e6a;
@@ -20,7 +20,7 @@
   --color-bg-raised: var(--color-bg-raised);
   --color-bg-panel: var(--color-bg-panel);
   --color-border: var(--color-border);
-  --color-border-soft: var(--color-border-soft);
+  --color-border-strong: var(--color-border-strong);
   --color-fg: var(--color-fg);
   --color-fg-muted: var(--color-fg-muted);
   --color-fg-faint: var(--color-fg-faint);
