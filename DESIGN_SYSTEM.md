@@ -25,7 +25,8 @@ These come from the Telkie sales deck's color language (warm cream + charcoal + 
 
 ## Spacing & shape conventions
 
-- Section rhythm: `py-24 sm:py-32`, separated by `border-t border-border-soft` (the hero is the one exception — no top border, tighter `pt-20 pb-16 sm:pt-28 sm:pb-24`).
+- Section rhythm: `py-24 sm:py-32`, separated by `border-t border-border` (the hero is the one exception — no top border, tighter `pt-20 pb-16 sm:pt-28 sm:pb-24`).
+- Borders: `border-border` at rest, always — don't introduce a second shade for "softer" dividers or frames. A hover/active state darkens to `border-border-strong` (see `Card`'s `hover` prop and the ghost `Button`) — border color always comes from a border token, never a text (`fg-*`) token, even on hover.
 - Panel/card radius: `rounded-2xl`. Pills and buttons: `rounded-full`.
 - Content width: everything sits inside `Container` (`max-w-6xl`); text-only sections additionally cap prose at `max-w-2xl` via `SectionHeading`.
 
@@ -35,7 +36,7 @@ These come from the Telkie sales deck's color language (warm cream + charcoal + 
 - `Container` (`container.tsx`) — page-width wrapper (`max-w-6xl`, responsive padding). Every section's content sits inside one.
 - `SplitSection` (`split-section.tsx`) — the two-column "copy beside media" layout used by `Hero`, `ScanToService`, and `CTA`. Props: `copy`, `media` (both `ReactNode`), `reverse` (flips column order on `lg:`), `bordered` (default `true`, set `false` to drop the top border — used by `Hero`), `padding` (override the default `py-24 sm:py-32`), `id`. Use this for any new "explain this, show a photo/screenshot of it" section instead of writing a new grid. (`Showcase` looked like a candidate but is a single centered column — heading/copy on top, full-width screenshot below — so it doesn't use `SplitSection`.)
 - `ImageBand` (`image-band.tsx`) — full-bleed photo section with an optional one-line caption underneath, for a standalone lifestyle-photo moment that doesn't need paired copy. Built and available, but not currently placed in `page.tsx` — reach for it when a future section needs a photo with no accompanying text block.
-- `Card` (`card.tsx`) — the bordered/filled panel (`rounded-2xl border border-border-soft bg-bg-panel/60`) used for feature cards, the pricing card, and the product-screenshot frame. Pass `hover` to add the hover-border transition (used on interactive-feeling cards like feature tiles, not on static ones like the screenshot frame).
+- `Card` (`card.tsx`) — the bordered/filled panel (`rounded-2xl border border-border bg-bg-panel/60`) used for feature cards, the pricing card, and the product-screenshot frame. Pass `hover` to darken the border to `border-border-strong` on hover (used on interactive-feeling cards like feature tiles, not on static ones like the screenshot frame).
 - `SectionHeading` (`section-heading.tsx`) — eyebrow + title + optional description, `align="center" | "left"`.
 
 **Content primitives**
@@ -46,7 +47,7 @@ These come from the Telkie sales deck's color language (warm cream + charcoal + 
 ## Imagery guidelines
 
 - Source photography lives in `public/images/lifestyle/` (JPEG, resized to ~1600px max width, ~75–80% quality — keep new additions under ~400KB; this is a static-exported site, no image optimization pipeline runs at build time).
-- Treatment: full-bleed inside a `rounded-2xl border border-border-soft` frame (what `SplitSection`'s `media` slot and `ImageBand` both do) — don't add drop shadows or heavy effects beyond that; the deck/Golvhuset reference is minimal, not glossy.
+- Treatment: full-bleed inside a `rounded-2xl border border-border` frame (what `SplitSection`'s `media` slot and `ImageBand` both do) — don't add drop shadows or heavy effects beyond that; the deck/Golvhuset reference is minimal, not glossy.
 - Pick images that show a real hotel context, a WeChat/product moment, or both together — avoid stacking two visually similar lobby/desk shots back-to-back on the page.
 - Logo: use `public/images/logo/telkie-logo-color.png` (full-color, for the light background). The white SVG (`telkie-logo-white.svg`) is left in place but unused — only reach for it if a future section reintroduces a dark surface.
 - All images use plain `<img>` (with the `@next/next/no-img-element` eslint-disable comment), never `next/image` — this repo builds with `output: "export"` and has already opted out of Next's image optimizer for that reason.

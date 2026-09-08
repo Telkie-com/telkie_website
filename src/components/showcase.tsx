@@ -5,7 +5,7 @@ import { SectionHeading } from "./section-heading";
 
 export function Showcase() {
   return (
-    <section className="border-t border-border-soft py-24 sm:py-32">
+    <section className="border-t border-border py-24 sm:py-32">
       <Container className="flex flex-col items-center gap-14">
         <Reveal>
           <SectionHeading

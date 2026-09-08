@@ -14,7 +14,7 @@ const items = [
 
 export function Security() {
   return (
-    <section id="security" className="border-t border-border-soft py-24 sm:py-32">
+    <section id="security" className="border-t border-border py-24 sm:py-32">
       <Container className="flex flex-col items-center gap-16">
         <Reveal>
           <SectionHeading

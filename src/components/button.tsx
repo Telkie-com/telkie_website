@@ -11,7 +11,7 @@ export function Button({ variant = "primary", className = "", ...props }: Button
   const styles =
     variant === "primary"
       ? "bg-accent text-accent-fg hover:bg-accent-dim"
-      : "border border-border text-fg hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-accent-fg";
+      : "border border-border text-fg hover:border-border-strong";
 
   return <a className={`${base} ${styles} ${className}`} {...props} />;
 }

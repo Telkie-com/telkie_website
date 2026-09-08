@@ -40,7 +40,7 @@ export function Hero() {
       }
       media={
         <Reveal delay={200}>
-          <div className="overflow-hidden rounded-2xl border border-border-soft shadow-[0_40px_120px_-40px_rgba(44,84,104,0.25)]">
+          <div className="overflow-hidden rounded-2xl border border-border shadow-[0_40px_120px_-40px_rgba(44,84,104,0.25)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/lifestyle/front-desk.jpg"

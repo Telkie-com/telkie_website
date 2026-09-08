@@ -27,7 +27,7 @@ const features = [
 
 export function Features() {
   return (
-    <section id="product" className="border-t border-border-soft py-24 sm:py-32">
+    <section id="product" className="border-t border-border py-24 sm:py-32">
       <Container className="flex flex-col items-center gap-16">
         <Reveal>
           <SectionHeading eyebrow="Why Telkie" title="One platform for every guest conversation" />

@@ -17,7 +17,7 @@ export function ScanToService() {
       }
       media={
         <Reveal delay={120}>
-          <div className="overflow-hidden rounded-2xl border border-border-soft">
+          <div className="overflow-hidden rounded-2xl border border-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/lifestyle/wechat-qr-scan.jpg"

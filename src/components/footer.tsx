@@ -18,7 +18,7 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border-soft py-16">
+    <footer className="border-t border-border py-16">
       <Container className="flex flex-col gap-12">
         <div className="flex flex-col justify-between gap-10 sm:flex-row">
           <div className="flex max-w-xs flex-col gap-3">
@@ -45,7 +45,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col-reverse items-center justify-between gap-4 border-t border-border-soft pt-8 sm:flex-row">
+        <div className="flex flex-col-reverse items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
           <p className="text-xs text-fg-faint">© 2026 Telkie Limited. All rights reserved.</p>
           <a
             href="https://hk.linkedin.com/company/telkie"

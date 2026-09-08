@@ -15,7 +15,7 @@ const included = [
 
 export function Pricing() {
   return (
-    <section id="pricing" className="border-t border-border-soft py-24 sm:py-32">
+    <section id="pricing" className="border-t border-border py-24 sm:py-32">
       <Container className="flex flex-col items-center gap-14">
         <Reveal>
           <SectionHeading

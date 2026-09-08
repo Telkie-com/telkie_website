@@ -11,10 +11,10 @@ export function ImageBand({
   caption?: string;
 }) {
   return (
-    <section className="border-t border-border-soft py-24 sm:py-32">
+    <section className="border-t border-border py-24 sm:py-32">
       <Container>
         <Reveal>
-          <div className="overflow-hidden rounded-2xl border border-border-soft">
+          <div className="overflow-hidden rounded-2xl border border-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={src} alt={alt} className="h-auto w-full object-cover" />
           </div>
