@@ -12,7 +12,7 @@ Defined in `src/app/globals.css` as CSS variables, mapped into Tailwind via the 
 | `bg-raised` | `#ffffff` | Elevated surfaces (nav backdrop, pure-white panels) |
 | `bg-panel` | `#f1eee6` | Card/panel fill — always used at `/60` or `/70` opacity over `bg` |
 | `border` | `#5E5E5E` | Stronger border (ghost button outline, hovered cards, pills) — ≥3:1 against `bg`, per WCAG 1.4.11 for interactive-element boundaries |
-| `border-soft` | `#c4beb0` | Default section/card divider — intentionally softer/decorative, not a component boundary |
+| `border-soft` | `#5E5E5E` | Default section/card divider and soft borders, aligned with the visible border-line color |
 | `fg` | `#3a3a3d` | Primary text (charcoal) |
 | `fg-muted` | `#6b6b6e` | Secondary/body text |
 | `fg-faint` | `#706e6a` | Tertiary text (labels, captions, footer copy) — ≥4.5:1 against `bg`, meets WCAG AA for normal-size text |
