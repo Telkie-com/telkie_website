@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --color-bg: #08090b;
-  --color-bg-raised: #0e1013;
-  --color-bg-panel: #101418;
-  --color-border: #64748b;
-  --color-border-soft: #334155;
-  --color-fg: #f4f3ef;
-  --color-fg-muted: #9a9c9f;
-  --color-fg-faint: #63666b;
-  --color-accent: #2563eb;
-  --color-accent-text: #60a5fa;
-  --color-accent-dim: #1d4ed8;
-  --color-accent-fg: #f8fafc;
+  --color-bg: #f7f5f0;
+  --color-bg-raised: #ffffff;
+  --color-bg-panel: #f1eee6;
+  --color-border: #8f8b82;
+  --color-border-soft: #c4beb0;
+  --color-fg: #3a3a3d;
+  --color-fg-muted: #6b6b6e;
+  --color-fg-faint: #706e6a;
+  --color-accent: #2c5468;
+  --color-accent-text: #24475a;
+  --color-accent-dim: #1c384a;
+  --color-accent-fg: #ffffff;
 }
 
 @theme inline {
@@ -37,7 +37,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -73,12 +73,3 @@ body {
   }
 }
 
-.glow-orb {
-  background: radial-gradient(circle at 50% 40%, rgba(96, 165, 250, 0.55), rgba(96, 165, 250, 0.12) 35%, transparent 70%);
-  filter: blur(40px);
-}
-
-.grid-fade {
-  mask-image: radial-gradient(ellipse 60% 60% at 50% 0%, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 0%, black 40%, transparent 100%);
-}

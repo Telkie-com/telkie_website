@@ -24,7 +24,7 @@ export function Footer() {
           <div className="flex max-w-xs flex-col gap-3">
             <Link href="/" className="flex items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/logo/telkie-logo-white.svg" alt="Telkie" className="h-8 w-auto" />
+              <img src="/images/logo/telkie-logo-color.png" alt="Telkie" className="h-8 w-auto" />
             </Link>
             <p className="text-sm text-fg-muted">WeChat, done the hotel way.</p>
           </div>

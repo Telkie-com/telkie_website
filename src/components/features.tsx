@@ -1,3 +1,4 @@
+import { Card } from "./card";
 import { Container } from "./container";
 import { IconChat, IconDesk, IconLock } from "./icons";
 import { Reveal } from "./reveal";
@@ -35,7 +36,7 @@ export function Features() {
         <div className="grid w-full gap-6 sm:grid-cols-3">
           {features.map((feature, i) => (
             <Reveal key={feature.title} delay={i * 100}>
-              <div className="h-full rounded-2xl border border-border-soft bg-bg-panel/60 p-6 transition-colors hover:border-border">
+              <Card hover className="h-full p-6">
                 <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-accent/20 text-accent-text">
                   <feature.icon />
                 </div>
@@ -43,7 +44,7 @@ export function Features() {
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                   {feature.description}
                 </p>
-              </div>
+              </Card>
             </Reveal>
           ))}
         </div>

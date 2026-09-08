@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer";
 import { Hero } from "@/components/hero";
 import { Nav } from "@/components/nav";
 import { Pricing } from "@/components/pricing";
+import { ScanToService } from "@/components/scan-to-service";
 import { Security } from "@/components/security";
 import { Showcase } from "@/components/showcase";
 import { Stat } from "@/components/stat";
@@ -16,6 +17,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <WhatIs />
+        <ScanToService />
         <Features />
         <Showcase />
         <Security />

@@ -1,4 +1,5 @@
 import { Button } from "./button";
+import { Card } from "./card";
 import { Container } from "./container";
 import { IconCheck } from "./icons";
 import { Reveal } from "./reveal";
@@ -25,7 +26,7 @@ export function Pricing() {
         </Reveal>
 
         <Reveal delay={120} className="w-full max-w-md">
-          <div className="rounded-2xl border border-border bg-bg-panel/70 p-8">
+          <Card className="p-8">
             <ul className="flex flex-col gap-3.5">
               {included.map((item) => (
                 <li key={item} className="flex items-center gap-3 text-sm text-fg">
@@ -39,7 +40,7 @@ export function Pricing() {
             <Button href="#contact" className="mt-8 w-full">
               Talk to sales
             </Button>
-          </div>
+          </Card>
         </Reveal>
       </Container>
     </section>
