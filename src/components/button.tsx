@@ -6,12 +6,12 @@ type ButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
 
 export function Button({ variant = "primary", className = "", ...props }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors duration-200";
+    "inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200";
 
   const styles =
     variant === "primary"
       ? "bg-accent text-accent-fg hover:bg-accent-dim"
-      : "border border-border text-fg hover:border-fg-muted";
+      : "border border-border text-fg hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-accent-fg";
 
   return <a className={`${base} ${styles} ${className}`} {...props} />;
 }

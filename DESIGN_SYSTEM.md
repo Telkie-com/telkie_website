@@ -39,7 +39,7 @@ These come from the Telkie sales deck's color language (warm cream + charcoal + 
 - `SectionHeading` (`section-heading.tsx`) — eyebrow + title + optional description, `align="center" | "left"`.
 
 **Content primitives**
-- `Button` (`button.tsx`) — `variant="primary" | "ghost"`. Primary = filled accent pill; ghost = outlined.
+- `Button` (`button.tsx`) — `variant="primary" | "ghost"`. Primary = filled accent pill. Ghost = outlined line button; on hover it now visibly fills with `accent`, switches text to `accent-fg`, and lifts slightly.
 - `Reveal` (`reveal.tsx`) — scroll/mount fade-up wrapper; wrap each independently-timed piece of a section in its own `Reveal` with a staggered `delay` (see any existing section for the pattern).
 - `icons.tsx` — inline SVG icon set, sized/colored via `currentColor` + Tailwind sizing classes.
 
