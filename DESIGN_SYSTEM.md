@@ -11,7 +11,7 @@ Defined in `src/app/globals.css` as CSS variables, mapped into Tailwind via the 
 | `bg` | `#f7f5f0` | Page background (warm cream) |
 | `bg-raised` | `#ffffff` | Elevated surfaces (nav backdrop, pure-white panels) |
 | `bg-panel` | `#f1eee6` | Card/panel fill — always used at `/60` or `/70` opacity over `bg` |
-| `border` | `#8f8b82` | Stronger border (ghost button outline, hovered cards, pills) — ≥3:1 against `bg`, per WCAG 1.4.11 for interactive-element boundaries |
+| `border` | `#5E5E5E` | Stronger border (ghost button outline, hovered cards, pills) — ≥3:1 against `bg`, per WCAG 1.4.11 for interactive-element boundaries |
 | `border-soft` | `#c4beb0` | Default section/card divider — intentionally softer/decorative, not a component boundary |
 | `fg` | `#3a3a3d` | Primary text (charcoal) |
 | `fg-muted` | `#6b6b6e` | Secondary/body text |
