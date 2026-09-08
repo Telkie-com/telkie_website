@@ -11,8 +11,8 @@ Defined in `src/app/globals.css` as CSS variables, mapped into Tailwind via the 
 | `bg` | `#f7f5f0` | Page background (warm cream) |
 | `bg-raised` | `#ffffff` | Elevated surfaces (nav backdrop, pure-white panels) |
 | `bg-panel` | `#f1eee6` | Card/panel fill — always used at `/60` or `/70` opacity over `bg` |
-| `border` | `#8f8b82` | The resting border color, used everywhere — section dividers, card/photo frames, button outlines, pills — ≥3:1 against `bg`, per WCAG 1.4.11 |
-| `border-strong` | `#6b6862` | The hover/active state for a border — a darker shade of `border` itself, not a text token. Only used on `:hover` |
+| `border` | `#5E5E5E` | Stronger border (ghost button outline, hovered cards, pills) — ≥3:1 against `bg`, per WCAG 1.4.11 for interactive-element boundaries |
+| `border-soft` | `#5E5E5E` | Default section/card divider and soft borders, aligned with the visible border-line color |
 | `fg` | `#3a3a3d` | Primary text (charcoal) |
 | `fg-muted` | `#6b6b6e` | Secondary/body text |
 | `fg-faint` | `#706e6a` | Tertiary text (labels, captions, footer copy) — ≥4.5:1 against `bg`, meets WCAG AA for normal-size text |
@@ -40,7 +40,7 @@ These come from the Telkie sales deck's color language (warm cream + charcoal + 
 - `SectionHeading` (`section-heading.tsx`) — eyebrow + title + optional description, `align="center" | "left"`.
 
 **Content primitives**
-- `Button` (`button.tsx`) — `variant="primary" | "ghost"`. Primary = filled accent pill; ghost = outlined.
+- `Button` (`button.tsx`) — `variant="primary" | "ghost"`. Primary = filled accent pill. Ghost = outlined line button; on hover it now visibly fills with `accent`, switches text to `accent-fg`, and lifts slightly.
 - `Reveal` (`reveal.tsx`) — scroll/mount fade-up wrapper; wrap each independently-timed piece of a section in its own `Reveal` with a staggered `delay` (see any existing section for the pattern).
 - `icons.tsx` — inline SVG icon set, sized/colored via `currentColor` + Tailwind sizing classes.
 
