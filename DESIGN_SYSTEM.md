@@ -12,7 +12,7 @@ Defined in `src/app/globals.css` as CSS variables, mapped into Tailwind via the 
 | `bg-raised` | `#ffffff` | Elevated surfaces (nav backdrop, pure-white panels) |
 | `bg-panel` | `#f1eee6` | Card/panel fill — always used at `/60` or `/70` opacity over `bg` |
 | `border` | `#5E5E5E` | The resting border color, used everywhere — section dividers, card/photo frames, button outlines, pills — ≥3:1 against `bg`, per WCAG 1.4.11 |
-| `border-strong` | `#474747` | The hover/active state for a border — a darker shade of `border` itself, not a text token. Only used on `:hover` |
+| `border-strong` | `#474747` | The hover/active state for border-only interactions such as hoverable cards — a darker shade of `border` itself, not a text token. Only used on `:hover` |
 | `fg` | `#3a3a3d` | Primary text (charcoal) |
 | `fg-muted` | `#6b6b6e` | Secondary/body text |
 | `fg-faint` | `#706e6a` | Tertiary text (labels, captions, footer copy) — ≥4.5:1 against `bg`, meets WCAG AA for normal-size text |
@@ -26,7 +26,7 @@ These come from the Telkie sales deck's color language (warm cream + charcoal + 
 ## Spacing & shape conventions
 
 - Section rhythm: `py-24 sm:py-32`, separated by `border-t border-border` (the hero is the one exception — no top border, tighter `pt-20 pb-16 sm:pt-28 sm:pb-24`).
-- Borders: `border-border` at rest, always — don't introduce a second shade for "softer" dividers or frames. A hover/active state darkens to `border-border-strong` (see `Card`'s `hover` prop and the ghost `Button`) — border color always comes from a border token, never a text (`fg-*`) token, even on hover.
+- Borders: `border-border` at rest, always — don't introduce a second shade for "softer" dividers or frames. Border-only hover/active states darken to `border-border-strong` (see `Card`'s `hover` prop). High-emphasis line buttons may instead fill with `accent` on hover for a clearer call-to-action state.
 - Panel/card radius: `rounded-2xl`. Pills and buttons: `rounded-full`.
 - Content width: everything sits inside `Container` (`max-w-6xl`); text-only sections additionally cap prose at `max-w-2xl` via `SectionHeading`.
 
@@ -40,7 +40,7 @@ These come from the Telkie sales deck's color language (warm cream + charcoal + 
 - `SectionHeading` (`section-heading.tsx`) — eyebrow + title + optional description, `align="center" | "left"`.
 
 **Content primitives**
-- `Button` (`button.tsx`) — `variant="primary" | "ghost"`. Primary = filled accent pill; ghost = outlined, border darkens to `border-strong` on hover.
+- `Button` (`button.tsx`) — `variant="primary" | "ghost"`. Primary = filled accent pill. Ghost = outlined line button; on hover it visibly lifts, fills with `accent`, and switches text to `accent-fg`.
 - `Reveal` (`reveal.tsx`) — scroll/mount fade-up wrapper; wrap each independently-timed piece of a section in its own `Reveal` with a staggered `delay` (see any existing section for the pattern).
 - `icons.tsx` — inline SVG icon set, sized/colored via `currentColor` + Tailwind sizing classes.
 
