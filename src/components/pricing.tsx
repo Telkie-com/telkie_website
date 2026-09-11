@@ -21,7 +21,7 @@ export function Pricing() {
           <SectionHeading
             eyebrow="Pricing"
             title="Simple, transparent pricing"
-            description="No hidden fees. One platform, one plan, everything included."
+            description="No hidden fees. One software solution, one plan, everything included."
           />
         </Reveal>
 
