@@ -30,7 +30,7 @@ export function Features() {
     <section id="product" className="border-t border-border py-24 sm:py-32">
       <Container className="flex flex-col items-center gap-16">
         <Reveal>
-          <SectionHeading eyebrow="Why Telkie" title="One platform for every guest conversation" />
+          <SectionHeading eyebrow="Why Telkie" title="One software solution for every guest conversation" />
         </Reveal>
 
         <div className="grid w-full gap-6 sm:grid-cols-3">
