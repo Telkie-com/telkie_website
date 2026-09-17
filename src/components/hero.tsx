@@ -11,7 +11,7 @@ export function Hero() {
         <div className="flex flex-col items-start text-left">
           <Reveal>
             <span className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-medium text-fg-muted">
-              New way of welcoming Chinese guests
+              For hotels welcoming Chinese guests
             </span>
           </Reveal>
 
