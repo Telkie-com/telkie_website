@@ -12,22 +12,22 @@ npm run build      # next build → static site in ./out (output: "export")
 npm run lint       # eslint (flat config, eslint-config-next core-web-vitals + typescript)
 npx tsc --noEmit   # typecheck (no separate script)
 
-CF_PAGES_BRANCH=uat npm run build   # build in UAT mode locally (noindex, uat.telkie.com URLs)
+VERCEL_GIT_COMMIT_REF=uat npm run build   # build in UAT mode locally (noindex, uat.telkie.com URLs)
 ```
 
 There is no test suite. Verify changes with `npm run build` (catches static-export violations) and `npm run lint`.
 
 ## What this is
 
-A single-page marketing site for Telkie (WeChat guest messaging for hotels), built on Next.js 16 App Router + React 19 + Tailwind v4, statically exported and deployed to Cloudflare Pages.
+A single-page marketing site for Telkie (WeChat guest messaging for hotels), built on Next.js 16 App Router + React 19 + Tailwind v4, statically exported and deployed to Vercel.
 
 - **Static export is a hard constraint.** `next.config.ts` sets `output: "export"`. No server actions, route handlers with dynamic behavior, middleware, or `next/image`. Images use plain `<img>` with an `// eslint-disable-next-line @next/next/no-img-element` comment. `robots.ts` and `sitemap.ts` declare `export const dynamic = "force-static"`.
-- **Deploy & environments:** a single Cloudflare Pages project (`telkie-website`) builds every pushed branch with `npx next build` → `out/`. There is no deploy workflow in the repo.
+- **Deploy & environments:** a single Git-connected Vercel project (company team account) builds every pushed branch with `next build` → `out/`. There is no deploy workflow in the repo.
   - `main` → **production** at `https://telkie.com` (indexed).
-  - `uat` → **UAT** at `https://uat.telkie.com` (`noindex`, robots `Disallow: /`).
-  - Any other branch/PR → throwaway preview at `<hash>.telkie-website.pages.dev` (also `noindex`).
+  - `uat` → **UAT** at `https://uat.telkie.com` (`noindex`, robots `Disallow: /`) — a Vercel domain assigned to the `uat` Git branch.
+  - Any other branch/PR → throwaway preview at `*.vercel.app` (also `noindex`).
   - Branch flow: feature branch → PR into `uat` → review on uat.telkie.com → PR `uat` → `main` to promote. Hotfixes go to `main`, then merge `main` back into `uat`.
-  - `src/lib/site.ts` derives `IS_PRODUCTION` and `SITE_URL` from Cloudflare's build-time `CF_PAGES_BRANCH` / `CF_PAGES_URL`; `layout.tsx` (metadataBase, OG, JSON-LD, robots meta) and `robots.ts` / `sitemap.ts` all read from it. Locally both vars are unset, so a plain `npm run build` produces the production output. `.node-version` pins Node 20 for Cloudflare's build image.
+  - `src/lib/site.ts` derives `IS_PRODUCTION` and `SITE_URL` from Vercel's build-time `VERCEL_GIT_COMMIT_REF` / `VERCEL_BRANCH_URL`; `layout.tsx` (metadataBase, OG, JSON-LD, robots meta) and `robots.ts` / `sitemap.ts` all read from it. Locally both vars are unset, so a plain `npm run build` produces the production output.
 - **No client components.** Everything under `src/` is a server component (no `"use client"` anywhere). `Reveal` is a pure-CSS fade-up keyed off `--reveal-delay`, not an IntersectionObserver — keep it that way unless interactivity is genuinely needed.
 
 ## Structure
