@@ -13,6 +13,7 @@ npm run lint       # eslint (flat config, eslint-config-next core-web-vitals + t
 npx tsc --noEmit   # typecheck (no separate script)
 
 VERCEL_GIT_COMMIT_REF=uat npm run build   # build in UAT mode locally (noindex, uat.telkie.com URLs)
+npx serve out     # preview a build — `npm run start` does not work with output: "export"
 ```
 
 There is no test suite. Verify changes with `npm run build` (catches static-export violations) and `npm run lint`.
@@ -26,17 +27,19 @@ A single-page marketing site for Telkie (WeChat guest messaging for hotels), bui
   - `main` → **production** at `https://telkie.com` (indexed).
   - `uat` → **UAT** at `https://uat.telkie.com` (`noindex`, robots `Disallow: /`) — a Vercel domain assigned to the `uat` Git branch.
   - Any other branch/PR → throwaway preview at `*.vercel.app` (also `noindex`).
-  - Branch flow: feature branch → PR into `uat` → review on uat.telkie.com → PR `uat` → `main` to promote. Hotfixes go to `main`, then merge `main` back into `uat`.
+  - Branch flow: feature branch → PR into `uat` → review on uat.telkie.com → PR `uat` → `main` to promote (manual). Hotfixes go to `main`, then merge `main` back into `uat`.
+  - `.github/workflows/ci.yml` runs lint + a UAT-mode build on every PR into `uat` or `main`. PRs from `iris/*` (the Slack agent, which can only push `iris/*`) into `uat` are **auto-merged** once that passes — a draft PR opts out. Nothing auto-merges into `main`. There is no deploy workflow; Vercel deploys on push.
   - `src/lib/site.ts` derives `IS_PRODUCTION` and `SITE_URL` from Vercel's build-time `VERCEL_GIT_COMMIT_REF` / `VERCEL_BRANCH_URL`; `layout.tsx` (metadataBase, OG, JSON-LD, robots meta) and `robots.ts` / `sitemap.ts` all read from it. Locally both vars are unset, so a plain `npm run build` produces the production output.
+  - The checkout is linked to the Vercel project via a gitignored `.vercel/` directory, so `vercel` CLI commands work here without re-linking. Never commit it.
 - **No client components.** Everything under `src/` is a server component (no `"use client"` anywhere). `Reveal` is a pure-CSS fade-up keyed off `--reveal-delay`, not an IntersectionObserver — keep it that way unless interactivity is genuinely needed.
 
 ## Structure
 
-- `src/app/page.tsx` — the whole site: composes section components in page order (`Nav → Hero → WhatIs → ScanToService → Features → Showcase → Security → Stat → Pricing → CTA → Footer`). Reordering sections means editing this one file.
+- `src/app/page.tsx` — the whole site: `Nav`, then `<main>` containing the sections in page order (`Hero → WhatIs → ScanToService → Features → Showcase → Security → Stat → Pricing → CTA`), then `Footer`. Reordering or adding a section means editing this one file; new sections go inside `<main>`.
 - `src/app/layout.tsx` — Geist fonts, `<Metadata>` (OG/Twitter/canonical), and Organization JSON-LD. Page title/description live here.
 - `src/app/globals.css` — the entire design token system. Colors are CSS variables on `:root`, mapped into Tailwind via `@theme inline` so they're usable as `bg-bg`, `text-fg-muted`, `border-border`, etc. There is no `tailwind.config`; Tailwind v4 is wired through `postcss.config.mjs`.
 - `src/components/` — flat; layout primitives (`container`, `split-section`, `card`, `section-heading`, `image-band`, `button`, `reveal`, `icons`) plus one file per page section.
-- `public/images/` — web-served assets (`lifestyle/`, `logo/`, `feature-ui/`). The root-level `images/` directory holds raw/original source files (deck exports, unoptimized PNGs) and is not served — resize/compress into `public/images/` before using anything from it.
+- `public/images/` — web-served assets (`lifestyle/`, `logo/`, `feature-ui/`). The root-level `images/` directory is tracked in git but not served; it holds raw/original source files (deck exports, unoptimized PNGs, some paths with spaces) — resize/compress into `public/images/` before using anything from it.
 - `reference_do_not_commit_to_github/` — untracked local reference material; never `git add` it.
 
 ## Design system
