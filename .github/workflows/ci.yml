@@ -1,0 +1,55 @@
+# Runs lint + a UAT-mode static build on every PR into `uat` or `main`.
+# PRs from `iris/*` branches into `uat` are then merged automatically, so the
+# Slack agent (which can only push `iris/*`) can land changes on uat.telkie.com
+# without any credentials for `uat`. Promotion `uat` -> `main` stays manual.
+#
+# Vercel deploys `uat` on the resulting push via its own GitHub App webhook,
+# which is unaffected by the "GITHUB_TOKEN pushes don't trigger workflows" rule.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [uat, main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+        # `next build` typechecks and catches static-export violations.
+        # VERCEL_GIT_COMMIT_REF=uat exercises the UAT branch of src/lib/site.ts.
+      - run: npm run build
+        env:
+          VERCEL_GIT_COMMIT_REF: uat
+
+  merge-to-uat:
+    needs: verify
+    if: >-
+      github.event.pull_request.base.ref == 'uat' &&
+      startsWith(github.event.pull_request.head.ref, 'iris/') &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - run: gh pr merge "$PR_URL" --merge --delete-branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
