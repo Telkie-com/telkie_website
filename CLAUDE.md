@@ -11,16 +11,23 @@ npm run dev        # next dev at http://localhost:3000
 npm run build      # next build → static site in ./out (output: "export")
 npm run lint       # eslint (flat config, eslint-config-next core-web-vitals + typescript)
 npx tsc --noEmit   # typecheck (no separate script)
+
+CF_PAGES_BRANCH=uat npm run build   # build in UAT mode locally (noindex, uat.telkie.com URLs)
 ```
 
 There is no test suite. Verify changes with `npm run build` (catches static-export violations) and `npm run lint`.
 
 ## What this is
 
-A single-page marketing site for Telkie (WeChat guest messaging for hotels), built on Next.js 16 App Router + React 19 + Tailwind v4, statically exported and deployed to GitHub Pages.
+A single-page marketing site for Telkie (WeChat guest messaging for hotels), built on Next.js 16 App Router + React 19 + Tailwind v4, statically exported and deployed to Cloudflare Pages.
 
 - **Static export is a hard constraint.** `next.config.ts` sets `output: "export"`. No server actions, route handlers with dynamic behavior, middleware, or `next/image`. Images use plain `<img>` with an `// eslint-disable-next-line @next/next/no-img-element` comment. `robots.ts` and `sitemap.ts` declare `export const dynamic = "force-static"`.
-- **Deploy:** `.github/workflows/deploy.yml` runs `npm ci && npm run build` on every push to `main` and publishes `./out` to GitHub Pages. `public/CNAME` pins the custom domain `telkie.com`; `src/lib/site.ts` exports `SITE_URL` used by metadata, JSON-LD, robots, and sitemap. Merging to `main` is a production deploy.
+- **Deploy & environments:** a single Cloudflare Pages project (`telkie-website`) builds every pushed branch with `npx next build` → `out/`. There is no deploy workflow in the repo.
+  - `main` → **production** at `https://telkie.com` (indexed).
+  - `uat` → **UAT** at `https://uat.telkie.com` (`noindex`, robots `Disallow: /`).
+  - Any other branch/PR → throwaway preview at `<hash>.telkie-website.pages.dev` (also `noindex`).
+  - Branch flow: feature branch → PR into `uat` → review on uat.telkie.com → PR `uat` → `main` to promote. Hotfixes go to `main`, then merge `main` back into `uat`.
+  - `src/lib/site.ts` derives `IS_PRODUCTION` and `SITE_URL` from Cloudflare's build-time `CF_PAGES_BRANCH` / `CF_PAGES_URL`; `layout.tsx` (metadataBase, OG, JSON-LD, robots meta) and `robots.ts` / `sitemap.ts` all read from it. Locally both vars are unset, so a plain `npm run build` produces the production output. `.node-version` pins Node 20 for Cloudflare's build image.
 - **No client components.** Everything under `src/` is a server component (no `"use client"` anywhere). `Reveal` is a pure-CSS fade-up keyed off `--reveal-delay`, not an IntersectionObserver — keep it that way unless interactivity is genuinely needed.
 
 ## Structure
