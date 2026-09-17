@@ -1,10 +1,15 @@
-# Runs lint + a UAT-mode static build on every PR into `uat` or `main`.
-# PRs from `iris/*` branches into `uat` are then merged automatically, so the
-# Slack agent (which can only push `iris/*`) can land changes on uat.telkie.com
-# without any credentials for `uat`. Promotion `uat` -> `main` stays manual.
+# `uat` is the shared integration branch; `main` is production.
 #
-# Vercel deploys `uat` on the resulting push via its own GitHub App webhook,
-# which is unaffected by the "GITHUB_TOKEN pushes don't trigger workflows" rule.
+# On every PR into `uat` or `main`: lint + a UAT-mode static build (`verify`).
+# Any non-draft, same-repo PR into `uat` — from the Slack agent (iris/*) or an
+# engineer — is merged automatically once `verify` passes; a draft PR opts out.
+# After each merge, a "Release to production" PR (`uat` -> `main`) is created or
+# its body refreshed with the list of changes waiting on UAT. A human approves
+# and merges that PR to ship. Nothing merges into `main` automatically.
+#
+# Merges and PRs made with GITHUB_TOKEN do not trigger other workflows, so the
+# release-PR upkeep runs here, in the same run that did the merge. Vercel's
+# deploy hook is separate from GitHub Actions and fires on the push as normal.
 
 name: CI
 
@@ -41,7 +46,6 @@ jobs:
     needs: verify
     if: >-
       github.event.pull_request.base.ref == 'uat' &&
-      startsWith(github.event.pull_request.head.ref, 'iris/') &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.draft == false
     runs-on: ubuntu-latest
@@ -53,3 +57,54 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_URL: ${{ github.event.pull_request.html_url }}
+
+  release-pr:
+    needs: merge-to-uat
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create or refresh the uat -> main release PR
+        run: |
+          set -euo pipefail
+          git fetch --quiet origin main uat
+
+          # PRs merged into uat whose merge commit is not yet on main.
+          pending=""
+          while IFS=$'\t' read -r num title author sha; do
+            [ -z "$sha" ] && continue
+            if git merge-base --is-ancestor "$sha" origin/uat && ! git merge-base --is-ancestor "$sha" origin/main; then
+              pending+="- #${num} ${title} (@${author})"$'\n'
+            fi
+          done < <(gh pr list --base uat --state merged --limit 50 \
+                     --json number,title,author,mergeCommit \
+                     --jq '.[] | [.number, .title, .author.login, .mergeCommit.oid] | @tsv')
+
+          if [ -z "$pending" ]; then
+            echo "uat has nothing pending for main; no release PR needed."
+            exit 0
+          fi
+
+          body="$(printf '%s\n' \
+            '## Waiting on UAT' \
+            '' \
+            "${pending}" \
+            'Review at https://uat.telkie.com, then **Approve** and **Merge** this PR to deploy to https://telkie.com.' \
+            'To drop a change instead, revert it on `uat` (open a revert PR; it auto-merges) before shipping.' \
+            '' \
+            '_Maintained automatically by `.github/workflows/ci.yml`._')"
+
+          existing="$(gh pr list --base main --head uat --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --body "$body"
+            echo "Refreshed release PR #$existing"
+          else
+            gh pr create --base main --head uat --title "Release to production" --body "$body"
+          fi
