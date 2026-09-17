@@ -20,7 +20,7 @@ export function Showcase() {
             <div className="overflow-hidden rounded-xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/feature-ui/messenger-dashboard.png"
+                src="/images/feature-ui/messenger-dashboard-test.svg"
                 alt="Telkie front desk inbox showing a guest conversation in Chinese with an English translation"
                 className="h-auto w-full"
               />
