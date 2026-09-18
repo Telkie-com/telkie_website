@@ -23,17 +23,25 @@ There is no test suite. Verify changes with `npm run build` (catches static-expo
 A single-page marketing site for Telkie (WeChat guest messaging for hotels), built on Next.js 16 App Router + React 19 + Tailwind v4, statically exported and deployed to Vercel.
 
 - **Static export is a hard constraint.** `next.config.ts` sets `output: "export"`. No server actions, route handlers with dynamic behavior, middleware, or `next/image`. Images use plain `<img>` with an `// eslint-disable-next-line @next/next/no-img-element` comment. `robots.ts` and `sitemap.ts` declare `export const dynamic = "force-static"`.
-- **Deploy & environments:** a single Git-connected Vercel project (company team account) builds every pushed branch with `next build` → `out/`. There is no deploy workflow in the repo.
+- **Deploy & environments:** a single Git-connected Vercel project (company team account) builds every pushed branch with `next build` → `out/`. There is no deploy workflow in the repo; Vercel deploys on push.
   - `main` → **production** at `https://telkie.com` (indexed).
   - `uat` → **UAT** at `https://uat.telkie.com` (`noindex`, robots `Disallow: /`) — a Vercel domain assigned to the `uat` Git branch.
   - Any other branch/PR → throwaway preview at `*.vercel.app` (also `noindex`).
-  - Branch flow: `uat` is the shared integration branch, `main` is production. Feature branch (the Slack agent uses `iris/*`; engineers use anything) → PR into `uat` → review on uat.telkie.com → one batched "Release to production" PR `uat` → `main`, approved and merged by a human. Hotfixes: PR into `main`, then PR `main` → `uat`.
-  - `.github/workflows/ci.yml` runs lint + a UAT-mode build (`verify`) on every PR into `uat` or `main`. Any non-draft, same-repo PR into `uat` is **auto-merged** once `verify` passes — a draft PR opts out. After each merge it creates or refreshes the release PR (`uat` → `main`) with the list of changes waiting on UAT. Nothing auto-merges into `main`. There is no deploy workflow; Vercel deploys on push.
-  - To drop a change that is already on `uat`, revert it there (a revert PR into `uat`, auto-merges) before shipping — the release is all-or-nothing.
-  - Rulesets protect both branches: PRs required, no force-push or deletion. `main` also needs 1 approval (repo admins may bypass, on PRs only). The Slack agent's GitHub App has `contents: write`, so these rulesets — not the agent's own `iris/*` convention — are what keep it off `main`.
   - `src/lib/site.ts` derives `IS_PRODUCTION` and `SITE_URL` from Vercel's build-time `VERCEL_GIT_COMMIT_REF` / `VERCEL_BRANCH_URL`; `layout.tsx` (metadataBase, OG, JSON-LD, robots meta) and `robots.ts` / `sitemap.ts` all read from it. Locally both vars are unset, so a plain `npm run build` produces the production output.
   - The checkout is linked to the Vercel project via a gitignored `.vercel/` directory, so `vercel` CLI commands work here without re-linking. Never commit it.
 - **No client components.** Everything under `src/` is a server component (no `"use client"` anywhere). `Reveal` is a pure-CSS fade-up keyed off `--reveal-delay`, not an IntersectionObserver — keep it that way unless interactivity is genuinely needed.
+
+## Delivery pipeline
+
+`uat` is the shared staging branch; `main` is production. Two gates: "put this on staging?" (Gate 1) and the release PR (Gate 2). The rules that matter when working in a session:
+
+- **`main` only changes when a human merges a PR.** The `main: production` ruleset requires a PR with 1 approval (repo admins may bypass, on PRs only). Nothing in this repo — CI or bot — merges into `main`.
+- **`uat` accepts direct merges; it does not require PRs.** Iris's connector merges `iris/*` → `uat` via the GitHub merge API after the requester says yes, so a `pull_request` rule on `uat` would block her (`GH013`). The `uat: integration` ruleset only blocks force-push and deletion. Engineers push or PR into `uat` as they like.
+- **CI is read-only.** `.github/workflows/ci.yml` runs `verify` (lint + `VERCEL_GIT_COMMIT_REF=uat npm run build`) on pushes to `iris/**` and `uat`, and on PRs into `main`. It must never merge, open PRs, delete branches or write to any branch; keep `permissions: contents: read`.
+- **Release:** an admin asks Iris to open the `uat` → `main` PR (or opens one by hand), reviews uat.telkie.com, approves and merges with a **merge commit** (not squash). Then `uat` is fast-forwarded to `main` so the branches reconverge. Iris never nudges about, approves or merges the release PR.
+- **The release is all-or-nothing.** To keep a change off production, revert it on `uat` first (a revert commit or PR into `uat`). Never reset `uat` to undo a merge.
+- **Hotfix:** PR into `main`, then merge `main` → `uat` so staging catches up.
+- Iris's GitHub App has `contents: write`; connector code keeps her off `main`, and the `main` ruleset makes that a GitHub guarantee. Her operating instructions live in her Slack/agent config, not in this repo.
 
 ## Structure
 
