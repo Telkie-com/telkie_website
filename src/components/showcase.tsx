@@ -1,4 +1,4 @@
-import featureDashboard from "../../images/feature UI/messenger-dashboard2.png";
+import featureDashboard from "../../images/feature UI/messenger-dashboard1.png";
 import { Card } from "./card";
 import { Container } from "./container";
 import { Reveal } from "./reveal";
