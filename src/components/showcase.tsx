@@ -1,3 +1,4 @@
+import featureDashboard from "../../images/feature UI/messenger-dashboard2.png";
 import { Card } from "./card";
 import { Container } from "./container";
 import { Reveal } from "./reveal";
@@ -20,7 +21,7 @@ export function Showcase() {
             <div className="overflow-hidden rounded-xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/feature-ui/messenger-dashboard.png"
+                src={featureDashboard.src}
                 alt="Telkie front desk inbox showing a guest conversation in Chinese with an English translation"
                 className="h-auto w-full"
               />
