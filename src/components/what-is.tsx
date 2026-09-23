@@ -17,7 +17,7 @@ export function WhatIs() {
           <p className="max-w-2xl text-center text-base text-fg-muted leading-relaxed">
             Telkie gives every department one secure system of record for guest
             conversations — from pre-arrival to check-out — so nothing depends on a
-            single person&rsquo;s phone.
+            single person&rsquo;s phone..
           </p>
         </Reveal>
       </Container>
