@@ -45,13 +45,13 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col-reverse items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
-          <p className="text-xs text-fg-faint">© 2026 Telkie Limited. All rights reserved.</p>
+        <div className="relative flex flex-col-reverse items-center justify-center gap-4 border-t border-border pt-8 sm:flex-row">
+          <p className="text-center text-xs text-fg-faint">© 2026 Telkie Limited. All rights reserved.</p>
           <a
             href="https://hk.linkedin.com/company/telkie"
             target="_blank"
             rel="noreferrer"
-            className="text-xs text-fg-muted transition-colors hover:text-fg"
+            className="text-xs text-fg-muted transition-colors hover:text-fg sm:absolute sm:right-0"
           >
             LinkedIn
           </a>
